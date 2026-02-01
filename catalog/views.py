@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 def home (request):
-    return render(request, "catalog/templates/home.html")
+    return render(request, "home.html")
 
 def contacts(request):
-    return render(request, "catalog/templates/contacts.html")
+    return render(request, "contacts.html")
