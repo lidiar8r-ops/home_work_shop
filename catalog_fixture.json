@@ -53,7 +53,7 @@
     "fields": {
         "name": "книга 2",
         "description": "книга 2",
-        "image": "image/вывод всех продуктов.png",
+        "image": "image/вывод_всех_продуктов.png",
         "category": 1,
         "price": "129.43",
         "created_at": "2026-02-08T10:27:48.539Z",
@@ -66,7 +66,7 @@
     "fields": {
         "name": "Мандарины",
         "description": "Мандарины",
-        "image": "image/1 категория изменение цены и удалениие.png",
+        "image": "image/1_категория изменение_цены_и_удалениие.png",
         "category": 2,
         "price": "259.99",
         "created_at": "2026-02-08T10:31:31.590Z",
@@ -79,7 +79,7 @@
     "fields": {
         "name": "Ветровка",
         "description": "Ветровка",
-        "image": "image/создание и вывод категорий.png",
+        "image": "image/создание_и_вывод_категорий.png",
         "category": 4,
         "price": "3567.00",
         "created_at": "2026-02-08T13:27:31.364Z",
