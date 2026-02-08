@@ -1,9 +1,20 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from .models import Product
 
 
 def home(request):
-    return render(request, "home.html")
+    # Выбираем последние 5 созданных продуктов (по полю created_at)
+    latest_products = Product.objects.order_by('-created_at')[:5]
+
+    # Выводим в консоль (для отладки)
+    for product in latest_products:
+        print(f"Продукт: {product.name}, Цена: {product.price}, Дата: {product.created_at}")
+
+    context = {
+        'latest_products': latest_products
+    }
+    return render(request, 'home.html', context)
 
 
 def contacts(request):
