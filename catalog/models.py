@@ -29,4 +29,4 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'книга'
         verbose_name_plural = 'книги'
-        ordering = ['title',]
+        ordering = ['name',]
