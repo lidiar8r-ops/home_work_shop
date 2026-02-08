@@ -169,5 +169,5 @@ python manage.py add_products
 [@lidiar8r-ops](https://github.com/lidiar8r-ops)
 
 
-Версия: 1.0
-Дата: 2026-02-01
+Версия: 2.0
+Дата: 2026-02-08
