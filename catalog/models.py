@@ -44,9 +44,7 @@ class Contact(models.Model):
     email = models.EmailField(verbose_name="Email")
     address = models.TextField(verbose_name="Адрес")
     working_hours = models.CharField(
-        max_length=100,
-        verbose_name="Часы работы",
-        help_text="Например: Пн-Пт 9:00–18:00"
+        max_length=100, verbose_name="Часы работы", help_text="Например: Пн-Пт 9:00–18:00"
     )
 
     def __str__(self):

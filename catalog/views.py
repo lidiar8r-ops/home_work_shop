@@ -1,7 +1,11 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+
 from .models import Product
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Contact
+from django.core.mail import send_mail
+from django.conf import settings
 
 def home(request):
     # Выбираем последние 5 созданных продуктов (по полю created_at)
@@ -18,14 +22,21 @@ def home(request):
 
 
 def contacts(request):
+    """
+    Обработка GET и POST запросов для страницы контактов.
+    При успешной отправке формы — перенаправление на ту же страницу с сообщением.
+    """
     if request.method == "POST":
-        # Получение данных из формы
-        name = request.POST.get("name")
-        message = request.POST.get("message")
-        phone = request.POST.get("phone")
-        # Обработка данных (например, сохранение в БД, отправка email и т. д.)
-        # print(name)
-        # print(message)
-        # Здесь мы просто возвращаем простой ответ
-        return HttpResponse(f"Спасибо, {name} (тел. {phone})! Ваше сообщение {message} получено.")
-    return render(request, "contacts.html")
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
+
+        if name and phone and message:
+            # Здесь можно добавить логику сохранения/отправки
+            messages.success(request, 'Сообщение отправлено!')
+            return redirect('catalog:contacts')
+        else:
+            messages.error(request, 'Заполните все поля!')
+
+    # Для GET и при ошибках передаём контекст (messages автоматически попадает в контекст)
+    return render(request, 'contacts.html')
