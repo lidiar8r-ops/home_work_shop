@@ -1,0 +1,12 @@
+[
+{
+    "model": "catalog.contact",
+    "pk": 1,
+    "fields": {
+        "phone": "+890999222",
+        "email": "dwd@fdfs.com",
+        "address": "USA, Redmond,WA,98052-6399",
+        "working_hours": "Пн-Пт 9:00–18:00"
+    }
+}
+]

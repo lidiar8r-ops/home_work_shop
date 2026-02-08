@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Product
+from .models import Category, Product, Contact
 
 
 @admin.register(Category)
@@ -23,3 +23,10 @@ class ProductAdmin(admin.ModelAdmin):
         "name",
         "description",
     )
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('phone', 'email', 'address')
+    search_fields = ('phone', 'email', 'address')
+    list_filter = ('working_hours',)

@@ -26,6 +26,7 @@ def contacts(request):
     Обработка GET и POST запросов для страницы контактов.
     При успешной отправке формы — перенаправление на ту же страницу с сообщением.
     """
+
     if request.method == "POST":
         name = request.POST.get('name')
         phone = request.POST.get('phone')
@@ -37,6 +38,8 @@ def contacts(request):
             return redirect('catalog:contacts')
         else:
             messages.error(request, 'Заполните все поля!')
-
+    else:
+        contact_info = Contact.objects.first()  # Получаем первую запись
+        return render(request, 'contacts.html', {'contact_info': contact_info})
     # Для GET и при ошибках передаём контекст (messages автоматически попадает в контекст)
     return render(request, 'contacts.html')
