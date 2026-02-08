@@ -10,17 +10,20 @@ class Category(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'категория'
-        verbose_name_plural = 'категории'
-        ordering = ['name', ]
+        verbose_name = "категория"
+        verbose_name_plural = "категории"
+        ordering = [
+            "name",
+        ]
 
 
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Наименование")
     description = models.TextField(max_length=1000, verbose_name="Описание")
-    image = models.ImageField(upload_to='image/', verbose_name="Изображение")
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='categories',
-                                 verbose_name="Категория")
+    image = models.ImageField(upload_to="image/", verbose_name="Изображение")
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="categories", verbose_name="Категория"
+    )
     price = models.DecimalField(decimal_places=2, max_digits=10, verbose_name="Цена за покупку")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего изменения")
@@ -29,6 +32,8 @@ class Product(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'продукт'
-        verbose_name_plural = 'продукты'
-        ordering = ['name', ]
+        verbose_name = "продукт"
+        verbose_name_plural = "продукты"
+        ordering = [
+            "name",
+        ]
