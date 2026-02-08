@@ -1,8 +1,8 @@
 import os
+from pathlib import Path
 
 from django.conf.global_settings import MEDIA_URL
 from dotenv import load_dotenv
-from pathlib import Path
 
 load_dotenv(override=True)
 
