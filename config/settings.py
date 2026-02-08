@@ -15,6 +15,7 @@ DEBUG = True if os.getenv('DEBUG') == 'True' else False
 
 ALLOWED_HOSTS = ['*']
 
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
