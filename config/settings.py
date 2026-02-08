@@ -1,4 +1,6 @@
 import os
+
+from django.conf.global_settings import MEDIA_URL
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -98,3 +100,6 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / 'media'
