@@ -43,3 +43,7 @@ def contacts(request):
         return render(request, 'contacts.html', {'contact_info': contact_info})
     # Для GET и при ошибках передаём контекст (messages автоматически попадает в контекст)
     return render(request, 'contacts.html')
+
+
+def index(request):
+    return render(request, 'base.html')
