@@ -1,5 +1,7 @@
 from .models import Product
 
+from django.core.paginator import Paginator
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Contact
@@ -47,7 +49,14 @@ def contacts(request):
 
 def products_list(request):
     products = Product.objects.all()
-    context = {"products": products}
+    paginator = Paginator(products, 6)  # 6 элементов на странице
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "products": page_obj,  # Теперь передаем сам объект пагинации
+        "is_paginated": paginator.num_pages > 1
+    }
     return render(request, 'products_list.html', context)
 
 
@@ -55,3 +64,5 @@ def products_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     context = {"product": product}
     return render(request, 'products_detail.html', context)
+
+
