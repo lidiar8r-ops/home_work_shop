@@ -1,11 +1,11 @@
-
 from .models import Product
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Contact
 from django.core.mail import send_mail
 from django.conf import settings
+
 
 def home(request):
     # Выбираем последние 5 созданных продуктов (по полю created_at)
@@ -47,5 +47,11 @@ def contacts(request):
 
 def products_list(request):
     products = Product.objects.all()
-    context = {"products" : products}
+    context = {"products": products}
     return render(request, 'products_list.html', context)
+
+
+def products_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    context = {"product": product}
+    return render(request, 'products_detail.html', context)
