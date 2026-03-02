@@ -1,11 +1,13 @@
-
 from .models import Product
 
-from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
+
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Contact
 from django.core.mail import send_mail
 from django.conf import settings
+
 
 def home(request):
     # Выбираем последние 5 созданных продуктов (по полю created_at)
@@ -43,3 +45,24 @@ def contacts(request):
         return render(request, 'contacts.html', {'contact_info': contact_info})
     # Для GET и при ошибках передаём контекст (messages автоматически попадает в контекст)
     return render(request, 'contacts.html')
+
+
+def products_list(request):
+    products = Product.objects.all()
+    paginator = Paginator(products, 6)  # 6 элементов на странице
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "products": page_obj,  # Теперь передаем сам объект пагинации
+        "is_paginated": paginator.num_pages > 1
+    }
+    return render(request, 'products_list.html', context)
+
+
+def products_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    context = {"product": product}
+    return render(request, 'products_detail.html', context)
+
+
