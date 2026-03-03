@@ -10,6 +10,15 @@ from .models import Contact
 
 class ProductListView(ListView):
     model = Product
+    template_name = 'product_list.html'
+    context_object_name = 'products'
+    paginate_by = 5  # 5 элементов на странице
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Добавляем is_paginated в контекст
+        context['is_paginated'] = self.get_paginate_by(self.get_queryset()) is not None
+        return context
 
 
 class ProductDetailView(DetailView):
@@ -63,12 +72,12 @@ class ProductDetailView(DetailView):
 #         "products": page_obj,  # Теперь передаем сам объект пагинации
 #         "is_paginated": paginator.num_pages > 1
 #     }
-#     return render(request, 'products_list.html', context)
+#     return render(request, 'product_list.html', context)
 #
 #
 # def products_detail(request, pk):
 #     product = get_object_or_404(Product, pk=pk)
 #     context = {"product": product}
-#     return render(request, 'products_detail.html', context)
+#     return render(request, 'product_detail.html', context)
 
 
