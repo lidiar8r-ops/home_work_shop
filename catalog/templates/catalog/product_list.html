@@ -4,52 +4,55 @@
 <div class="album py-5 bg-body-tertiary">
 
     <!-- Пагинация -->
-    <div >
+    <div>
         {% if is_paginated %}
-        <nav aria-label="Pagination">
+        <nav aria-label="Навигация по страницам">
             <ul class="pagination justify-content-center">
-                {% if products.has_previous %}  <!-- Здесь используем products вместо page_obj -->
+
+                <!-- Кнопка «Предыдущая» -->
+                {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ products.previous_page_number }}">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Предыдущая">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
-                    <span class="page-link">
-                        <span aria-hidden="true">&laquo;</span>
-                    </span>
+                    <span class="page-link">&laquo;</span>
                 </li>
                 {% endif %}
 
-                {% for page in products.paginator.page_range %}  <!-- Здесь products -->
-                {% if page == products.number %}  <!-- Здесь products -->
+                <!-- Номера страниц -->
+                {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
                 <li class="page-item active" aria-current="page">
-                    <span class="page-link">{{ page }}</span>
+                    <span class="page-link">{{ num }}</span>
                 </li>
                 {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
                 </li>
                 {% endif %}
                 {% endfor %}
 
-                {% if products.has_next %}  <!-- Здесь products -->
+
+                <!-- Кнопка «Следующая» -->
+                {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ products.next_page_number }}">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Следующая">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
-                    <span class="page-link">
-                        <span aria-hidden="true">&raquo;</span>
-                    </span>
+                    <span class="page-link">&raquo;</span>
                 </li>
                 {% endif %}
             </ul>
         </nav>
         {% endif %}
+
+
     </div>
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

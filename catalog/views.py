@@ -1,25 +1,15 @@
 from django.views.generic import DetailView, ListView
-
 from .models import Product
-
-from django.core.paginator import Paginator
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from .models import Contact
 
 class ProductListView(ListView):
     model = Product
     template_name = 'product_list.html'
     context_object_name = 'products'
-    paginate_by = 6  # 5 элементов на странице
+    paginate_by = 6  # Исправлено: 6 элементов на страницу
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Добавляем is_paginated в контекст
-        context['is_paginated'] = self.get_paginate_by(self.get_queryset()) is not None
-        return context
-
+    def get_queryset(self):
+        # Добавляем сортировку (например, по названию)
+        return Product.objects.order_by('name')
 
 class ProductDetailView(DetailView):
     model = Product
