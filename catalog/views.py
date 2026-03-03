@@ -1,18 +1,42 @@
-from django.views.generic import DetailView, ListView
-from .models import Product
+from django.views.generic import DetailView, ListView, TemplateView
+from .models import Product, Contact
+
 
 class ProductListView(ListView):
     model = Product
     template_name = 'product_list.html'
     context_object_name = 'products'
-    paginate_by = 6  # Исправлено: 6 элементов на страницу
+    paginate_by = 3  # Исправлено: 3 элементов на страницу
 
     def get_queryset(self):
         # Добавляем сортировку (например, по названию)
         return Product.objects.order_by('name')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Получаем последние 5 продуктов (по дате создания, от новых к старым)
+        latest_products = Product.objects.order_by('-created_at')[:5]
+        context['latest_products'] = latest_products
+
+        return context
+
+
 class ProductDetailView(DetailView):
     model = Product
+
+
+class ContactView(TemplateView):
+    model = Contact
+    template_name = 'catalog/contact.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Получаем актуальные контактные данные (например, первый объект в БД)
+        context['contact_info'] = Contact.objects.first()  # или filter().first()
+        return context
+
+
 
 # def home(request):
 #     # Выбираем последние 5 созданных продуктов (по полю created_at)
@@ -47,10 +71,10 @@ class ProductDetailView(DetailView):
 #             messages.error(request, 'Заполните все поля!')
 #     else:
 #         contact_info = Contact.objects.first()  # Получаем первую запись
-#         return render(request, 'contacts.html', {'contact_info': contact_info})
+#         return render(request, 'contact.html', {'contact_info': contact_info})
 #     # Для GET и при ошибках передаём контекст (messages автоматически попадает в контекст)
-#     return render(request, 'contacts.html')
-#
+#     return render(request, 'contact.html')
+
 #
 # def products_list(request):
 #     products = Product.objects.all()
