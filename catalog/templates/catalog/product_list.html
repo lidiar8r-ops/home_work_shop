@@ -53,7 +53,7 @@
     </div>
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for product in products.object_list %}  <!-- Используем products.object_list -->
+            {% for product in products %}  <!-- Используем products.object_list -->
             <div class="col">
                 <div class="card shadow-sm">
                     <img src="{{ product.image|medis_filter }}">

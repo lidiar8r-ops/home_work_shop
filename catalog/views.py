@@ -12,7 +12,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'product_list.html'
     context_object_name = 'products'
-    paginate_by = 5  # 5 элементов на странице
+    paginate_by = 6  # 5 элементов на странице
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
