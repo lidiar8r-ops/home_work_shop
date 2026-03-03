@@ -10,7 +10,9 @@ from .models import Contact
 
 class ProductListView(ListView):
     model = Product
-
+    template_name = 'products/product_list.html'  # путь к вашему шаблону
+    context_object_name = 'object_list'  # важно!
+    paginate_by = 5
 
 class ProductDetailView(DetailView):
     model = Product
@@ -43,7 +45,7 @@ class ProductDetailView(DetailView):
 #         if name and phone and message:
 #             # Здесь можно добавить логику сохранения/отправки
 #             messages.success(request, 'Сообщение отправлено!')
-#             return redirect('catalog:contacts')
+#             return redirect('products:contacts')
 #         else:
 #             messages.error(request, 'Заполните все поля!')
 #     else:

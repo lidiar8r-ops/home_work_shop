@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="categories",
-                        to="catalog.category",
+                        to="products.category",
                         verbose_name="Категория",
                     ),
                 ),
