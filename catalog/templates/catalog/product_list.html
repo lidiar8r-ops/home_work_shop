@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 {% load my_tags %}
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
@@ -8,9 +8,9 @@
         {% if is_paginated %}
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center">
-                {% if products.has_previous %}  <!-- Здесь используем products вместо page_obj -->
+                {% if object.has_previous %}  <!-- Здесь используем object вместо page_obj -->
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ products.previous_page_number }}">
+                    <a class="page-link" href="?page={{ object.previous_page_number }}">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -22,8 +22,8 @@
                 </li>
                 {% endif %}
 
-                {% for page in products.paginator.page_range %}  <!-- Здесь products -->
-                {% if page == products.number %}  <!-- Здесь products -->
+                {% for page in object.paginator.page_range %}  <!-- Здесь object -->
+                {% if page == object.number %}  <!-- Здесь object -->
                 <li class="page-item active" aria-current="page">
                     <span class="page-link">{{ page }}</span>
                 </li>
@@ -34,9 +34,9 @@
                 {% endif %}
                 {% endfor %}
 
-                {% if products.has_next %}  <!-- Здесь products -->
+                {% if object.has_next %}  <!-- Здесь object -->
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ products.next_page_number }}">
+                    <a class="page-link" href="?page={{ object.next_page_number }}">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
@@ -53,7 +53,7 @@
     </div>
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for product in products.object_list %}  <!-- Используем products.object_list -->
+            {% for product in object.object_list %}  <!-- Используем object.object_list -->
             <div class="col">
                 <div class="card shadow-sm">
                     <img src="{{ product.image|medis_filter }}">
@@ -63,7 +63,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a class="btn btn-primary" role="button"
-                                   href="{% url 'catalog:products_detail' product.pk %}">О товаре</a>
+                                   href="{% url 'catalog:object_detail' product.pk %}">О товаре</a>
                             </div>
                         </div>
                     </div>
