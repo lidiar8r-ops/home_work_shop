@@ -59,7 +59,12 @@
             {% for product in products %}  <!-- Используем products.object_list -->
             <div class="col">
                 <div class="card shadow-sm">
-                    <img src="{{ product.image|medis_filter }}">
+                    <div class="card-img-top-wrapper" style="height: 350px;">
+                        <img src="{{ product.image|medis_filter }}"
+                         class="img-fluid"
+                         alt="{{ product.name }}"
+                         style="height: 100%; object-fit: cover;">
+                    </div>
                     <div class="card-body">
                         <p class="card-text">{{ product.name }}</p>
                         <p class="card-text">Описание: {{ product.description|truncatechars:100 }}</p>

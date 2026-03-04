@@ -1,10 +1,11 @@
-from django.views.generic import DetailView, ListView, TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView, TemplateView, CreateView, UpdateView, DeleteView
 from .models import Product, Contact
 
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'product_list.html'
+    template_name = 'catalog/product_list.html'
     context_object_name = 'products'
     paginate_by = 3  # Исправлено: 3 элементов на страницу
 
@@ -24,6 +25,27 @@ class ProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    template_name = 'catalog/product_create.html'
+    fields = ["name", "description", "image", "category", "price"]
+    success_url  = reverse_lazy("catalog:products_list")
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    template_name = 'catalog/product_create.html'
+    fields = ["name", "description", "image", "category", "price"]
+    success_url = reverse_lazy("catalog:products_list")
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = 'catalog/product_create.html'
+    fields = ["name", "description", "image", "category", "price"]
+    success_url = reverse_lazy("catalog:products_list")
 
 
 class ContactView(TemplateView):
