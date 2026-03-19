@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    {% include 'blogs\\includes\\inc_header.html' %}
+</head>
+<body>
+    {% include 'blogs\\includes\\inc_themes.html' %}
+<header data-bs-theme="dark">
+
+    {% include 'blogs\\includes\\inc_menu.html' %}
+</header>
+<main>
+    {% include 'blogs\\includes\\inc_title.html' %}
+    {% include 'blogs\\includes\\inc_button_create.html' %}
+    {% block content %}
+    {% endblock %}
+</main>
+
+
+<footer class="text-body-secondary py-5">
+    {% include 'blogs\\includes\\inc_footer.html' %}
+</footer>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

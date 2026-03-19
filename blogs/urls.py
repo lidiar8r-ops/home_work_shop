@@ -1,6 +1,8 @@
 from django.urls import path
 
 from blogs.apps import BlogsConfig
+from blogs.views import BlogsListView, BlogsDetailView, BlogsCreateView, BlogsUpdateView, BlogsDeleteView
+
 # from blogs.views import BlogsListView, BlogsDetailView, ContactView, BlogsCreateView, BlogsUpdateView, \
 #     BlogsDeleteView
 
@@ -8,10 +10,11 @@ app_name = BlogsConfig.name
 
 urlpatterns = [
     # # path("", home, name="home"),
-    # path("", BlogsListView.as_view(), name='Blogs_list'),
-    # path("catalog/<int:pk>/", BlogsDetailView.as_view(), name='Blogs_detail'),
-    # path("contacts/", ContactView.as_view(), name="contacts"),
-    # path("catalog/create/", BlogsCreateView.as_view(), name="Blogs_create"),
-    # path("catalog/<int:pk>/update/", BlogsUpdateView.as_view(), name="Blogs_update"),
-    # path("catalog/<int:pk>/delete/", BlogsDeleteView.as_view(), name="Blogs_delete"),
+    path("", BlogsListView.as_view(), name='blog_list'),
+#     path('', BlogsListView.as_view(), name='blog_list'),  # Обратите внимание: имя приведено к snake_case
+# ]
+    path("blogs/<int:pk>/", BlogsDetailView.as_view(), name='blog_detail'),
+    path("blogs/create/", BlogsCreateView.as_view(), name="blog_create"),
+    path("blogs/<int:pk>/update/", BlogsUpdateView.as_view(), name="blog_update"),
+    path("blogs/<int:pk>/delete/", BlogsDeleteView.as_view(), name="blog_delete"),
 ]
