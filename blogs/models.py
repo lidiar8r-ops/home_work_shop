@@ -10,7 +10,7 @@ class Blog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего изменения")
     publication = models.BooleanField(verbose_name="Признак публикации",default=False)
-    counter_views = models.IntegerField(verbose_name="количество просмотров", null=True)
+    counter_views = models.PositiveIntegerField(verbose_name="количество просмотров", null=True, default=0)
 
     def __str__(self):
         return self.title

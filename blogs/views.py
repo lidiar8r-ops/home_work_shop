@@ -26,6 +26,11 @@ class BlogsListView(ListView):
 class BlogsDetailView(DetailView):
     model = Blog
 
+    def get_object(self, queryset=None):
+        self.get_object = super().get_object(queryset)
+        self.get_object.counter_views += 1
+        self.get_object.save()
+        return self.get_object
 
 class BlogsCreateView(CreateView):
     model = Blog
@@ -34,7 +39,7 @@ class BlogsCreateView(CreateView):
               'description',
               'image',
               'publication',
-              'counter_views']
+              ]  #'counter_views'
     success_url = reverse_lazy("blogs:blog_list")
 
 
@@ -44,6 +49,8 @@ class BlogsUpdateView(UpdateView):
     fields = ["name", "description", "image", "category", "price"]
     success_url = reverse_lazy("blogs:blog_list")
 
+    def success_url(self):
+        return reverse_lazy("blogs:blog_detail", args[self.kwargs.get("pk")])
 
 class BlogsDeleteView(DeleteView):
     model = Blog
