@@ -2,56 +2,41 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Blog
 
-
 class BlogsListView(ListView):
     model = Blog
     template_name = 'blogs/blog_list.html'
     context_object_name = 'blogs'
-    paginate_by = 6  # Исправлено: 3 элементов на страницу
+    paginate_by = 6
 
     def get_queryset(self):
-        # Добавляем сортировку (например, по названию)
-        return Blog.objects.order_by('title')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        #
-        # # Получаем последние 5 продуктов (по дате создания, от новых к старым)
-        # latest_blogs = Blog.objects.order_by('-created_at')[:5]
-        # # context['latest_blogs'] = latest_blogs
-
-        return context
-
+        return Blog.objects.filter(publication=True).order_by('-created_at')
 
 class BlogsDetailView(DetailView):
     model = Blog
 
     def get_object(self, queryset=None):
-        self.get_object = super().get_object(queryset)
-        self.get_object.counter_views += 1
-        self.get_object.save()
-        return self.get_object
+        obj = super().get_object(queryset)
+        obj.counter_views += 1
+        obj.save()
+        return obj
+
 
 class BlogsCreateView(CreateView):
     model = Blog
     template_name = 'blogs/blog_create.html'
-    fields = ['title',
-              'description',
-              'image',
-              'publication',
-              ]  #'counter_views'
+    fields = ['title', 'description', 'image', 'publication']
     success_url = reverse_lazy("blogs:blog_list")
 
 
 class BlogsUpdateView(UpdateView):
     model = Blog
-    template_name = 'blogs/blog_create.html'
-    fields = ["name", "description", "image", "category", "price"]
-    success_url = reverse_lazy("blogs:blog_list")
+    template_name = 'blogs/blog_create.html'  # Отдельный шаблон
+    fields = ['title', 'description', 'image', 'publication']
 
-    def success_url(self):
-        return reverse_lazy("blogs:blog_detail", args[self.kwargs.get("pk")])
+    def get_success_url(self):
+        return reverse_lazy("blogs:blog_detail")
+
 
 class BlogsDeleteView(DeleteView):
     model = Blog
-    success_url = reverse_lazy("blog:blogs_list")
+    success_url = reverse_lazy("blogs:blog_list")

@@ -11,8 +11,7 @@ app_name = BlogsConfig.name
 urlpatterns = [
     # # path("", home, name="home"),
     path("", BlogsListView.as_view(), name='blog_list'),
-#     path('', BlogsListView.as_view(), name='blog_list'),  # Обратите внимание: имя приведено к snake_case
-# ]
+#     path('', BlogsListView.as_view(), name='blog_list'),  ]
     path("blogs/<int:pk>/", BlogsDetailView.as_view(), name='blog_detail'),
     path("blogs/create/", BlogsCreateView.as_view(), name="blog_create"),
     path("blogs/<int:pk>/update/", BlogsUpdateView.as_view(), name="blog_update"),
