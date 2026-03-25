@@ -34,7 +34,7 @@ class BlogsUpdateView(UpdateView):
     fields = ['title', 'description', 'image', 'publication']
 
     def get_success_url(self):
-        return reverse_lazy("blogs:blog_detail")
+        return reverse_lazy("blogs:blog_detail", kwargs={'pk': self.object.pk})
 
 
 class BlogsDeleteView(DeleteView):
