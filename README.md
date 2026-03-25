@@ -342,7 +342,7 @@ python manage.py add_products
 
 
 ### Автор
-[@lidiar8r-ops](https://github.com/lidiar8r-ops)
+[@lidiar8r-ops](https://github.com/lidiar8r-ops) 
 
 
 Версия: 3.0
