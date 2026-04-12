@@ -38,3 +38,9 @@ class ProductForm(StyleFormMixin,ModelForm):
         description_l = description.lower()
         if description_l in dict_worlds :
             raise forms.ValidationError("Нельзя использовать это слово в описаниях продуктов")
+
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        if price <=0:
+            raise forms.ValidationError("Цена продукта не может быть отрицательной")
+
