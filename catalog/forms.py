@@ -55,12 +55,13 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
     def clean_name(self):
         name = self.cleaned_data['name']
         name_l = name.lower().strip()
+
         if not name_l:
             raise forms.ValidationError("Поле не может быть пустым")
 
         for word in dict_worlds:
             if word in name_l:
-                raise ValidationError(f"Слово '{word}' запрещено использовать в названиях.")
+                raise ValidationError(f"Слово '{word}' запрещено использовать в названиях продуктов")
 
         return name
 
@@ -68,17 +69,23 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
     def clean_description(self):
         description = self.cleaned_data['description']
         description_l = description.lower().strip()
-        if description_l in dict_worlds:
-            raise ValidationError("Нельзя использовать это слово в описаниях продуктов")
+
         if not description:  # Это делает поле обязательным!
             raise forms.ValidationError("Поле не может быть пустым")
+
+        for word in dict_worlds:
+            if word in description_l:
+                raise ValidationError(f"Слово '{word}' запрещено использовать в описаниях продуктов")
+
         return description
 
-
     def clean_price(self):
-        price = self.cleaned_data['price']
-        if price <= 0:
-            raise ValidationError("Цена продукта не может быть отрицательной")
+        price = self.cleaned_data.get('price')
+        if price is None:
+            raise forms.ValidationError('Цена обязательна для заполнения')
+        if price < 0:
+            raise forms.ValidationError('Цена не может быть отрицательной')
+        return price
 
 
     def clean_image(self):
