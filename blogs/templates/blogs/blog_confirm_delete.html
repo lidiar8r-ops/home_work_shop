@@ -1,0 +1,15 @@
+{% extends 'blogs/base.html' %}
+{% block title %}Удалить продукт{% endblock %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <h2>Удалить статью</h2>
+        <p class="card-text">Вы уверены, что хотите удалить "{{ blog.title }}"</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class = "btn btn-denger">Удалить</button>
+            <a href="{% url 'blogs:blog_list' %}" class = "btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
