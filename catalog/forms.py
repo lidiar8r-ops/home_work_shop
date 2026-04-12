@@ -6,9 +6,9 @@ from catalog.models import Product
 class StyleFormMixin:
     DEFAULT_WIDGET_CLASSES = {
         forms.BooleanField: 'form-check-input',
-        # Добавьте другие соответствия типов полей и CSS‑классов при необходимости
     }
     ADD_PLACEHOLDER = True  # Флаг для добавления placeholder
+    REQUIRED_ERROR_MESSAGE = 'Это поле обязательно для заполнения'  # Сообщение об ошибке на русском
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -36,7 +36,16 @@ class StyleFormMixin:
             else:
                 field.widget.attrs['class'] = 'form-control'
 
+            # Если поле обязательное и у него ещё нет error_messages
+            if field.required:
+                if not hasattr(field, 'error_messages'):
+                    field.error_messages = {}
+                # Добавляем или переопределяем сообщение для 'required'
+                field.error_messages['required'] = self.REQUIRED_ERROR_MESSAGE
+
+
 dict_worlds = ["казино", "криптовалюта", "крипта", "биржа", "дешево", "бесплатно", "обман", "полиция", "радар"]
+
 
 class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
@@ -65,10 +74,12 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
             raise forms.ValidationError("Поле не может быть пустым")
         return description
 
+
     def clean_price(self):
         price = self.cleaned_data['price']
         if price <= 0:
             raise ValidationError("Цена продукта не может быть отрицательной")
+
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
@@ -77,13 +88,13 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         if not image:
             return image
 
-        # Проверка размера (5 МБ = 5 242 880 байт)
+        # Проверка размера (5 МБ = 5 242 880 байт)
         max_size = 5 * 1024 * 1024
         if image.size > max_size:
             actual_size_mb = image.size / (1024 * 1024)
             raise ValidationError(
-                f'Размер файла слишком большой: {actual_size_mb:.2f} МБ. '
-                f'Максимальный размер: 5 МБ'
+                f'Размер файла слишком большой: {actual_size_mb:.2f} МБ. '
+                f'Максимальный размер: 5 МБ'
             )
 
         # Проверка расширения через os.path
