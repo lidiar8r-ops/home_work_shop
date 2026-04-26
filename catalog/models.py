@@ -20,7 +20,8 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Наименование")
     description = models.TextField(max_length=1000, verbose_name="Описание")
-    image = models.ImageField(upload_to="image/", verbose_name="Изображение")
+    image = models.ImageField(upload_to="image/", verbose_name="Изображение", blank=True, null=True,
+                              help_text='Загрузите изображение в формате JPEG или PNG, не более 5 МБ')
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="categories", verbose_name="Категория"
     )
