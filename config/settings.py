@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "catalog",
     "blogs",
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -108,3 +109,5 @@ ADMINS = [
     ('Иван Иванов', 'ivan@example.com'),
     ('Мария Петрова', 'maria@example.com'),
 ]
+
+AUTH_USER_MODEL = "users.User"
