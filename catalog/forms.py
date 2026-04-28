@@ -96,7 +96,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
             return image
 
         # Проверка размера (5 МБ = 5 242 880 байт)
-        max_size = 5 * 1024 * 1024
+        max_size = 10 * 1024 * 1024
         if image.size > max_size:
             actual_size_mb = image.size / (1024 * 1024)
             raise ValidationError(
