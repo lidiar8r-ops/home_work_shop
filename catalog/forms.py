@@ -101,7 +101,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
             actual_size_mb = image.size / (1024 * 1024)
             raise ValidationError(
                 f'Размер файла слишком большой: {actual_size_mb:.2f} МБ. '
-                f'Максимальный размер: 5 МБ'
+                f'Максимальный размер: 10 МБ'
             )
 
         # Проверка расширения через os.path
