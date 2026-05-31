@@ -1,0 +1,16 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container col-6">
+        <form method="post" class="row" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary mx-2">
+                    Войти
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

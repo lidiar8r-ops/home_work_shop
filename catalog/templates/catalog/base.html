@@ -12,7 +12,9 @@
 </header>
 <main>
     {% include 'catalog\\includes\\inc_title.html' %}
-    {% include 'catalog\\includes\\inc_button_create.html' %}
+    {% if user.is_authenticated %}
+        {% include 'catalog\\includes\\inc_button_create.html' %}
+    {% endif %}
     {% block content %}
     {% endblock %}
 </main>
