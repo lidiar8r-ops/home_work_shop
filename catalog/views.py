@@ -9,7 +9,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'catalog/product_list.html'
     context_object_name = 'products'
-    paginate_by = 3  # Исправлено: 3 элементов на страницу
+    paginate_by = 6  # Исправлено: 3 элементов на страницу
 
     def get_queryset(self):
         # Добавляем сортировку (например, по названию)
