@@ -113,3 +113,9 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
             )
 
         return image
+
+
+class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('status_publication',)
