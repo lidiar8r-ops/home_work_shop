@@ -39,6 +39,9 @@ class Product(models.Model):
         ordering = [
             "name",
         ]
+        permissions = [
+            ('can_unpublish_product','can unpublish product'),
+        ]
 
 
 class Contact(models.Model):
