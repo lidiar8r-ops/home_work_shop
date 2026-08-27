@@ -1,7 +1,8 @@
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView, DeleteView, UpdateView, CreateView
 
-from .forms import ProductForm
+from .forms import ProductForm, ProductModeratorForm
 from .models import Product, Contact
 
 
@@ -42,6 +43,16 @@ class ProductUpdateView(UpdateView):
     template_name = 'catalog/product_create.html'
     form_class = ProductForm
     success_url = reverse_lazy("catalog:products_list")
+
+    @property
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return ProductForm
+        if user.has_perm('catalog.can_update_product') and user.has_perm('catalog.can_delete_product'):
+            return ProductModeratorForm
+        return PermissionDenied
+
 
 
 class ProductDeleteView(DeleteView):
