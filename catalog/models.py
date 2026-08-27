@@ -28,6 +28,7 @@ class Product(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=10, verbose_name="Цена за покупку")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего изменения")
+    status_publication = models.BooleanField(default=False, verbose_name="Статус публикации")
 
     def __str__(self):
         return self.name
