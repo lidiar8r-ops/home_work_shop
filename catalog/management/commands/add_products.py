@@ -2,6 +2,7 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from catalog.models import Category, Product
+from users.models import User
 
 
 class Command(BaseCommand):
@@ -16,6 +17,11 @@ class Command(BaseCommand):
         call_command("loaddata", "catalog_fixture.json")
         self.stdout.write(self.style.SUCCESS("Successfully loaded data from fixture"))
 
+        owner, _ = User.objects.get_or_create(
+            email="admin@example.com",
+            defaults={"is_active": True, "is_staff": True},
+        )
+
         # Вставляем записи
         сategory, _ = Category.objects.get_or_create(
             name="Косметика и гигиена", description="косметические и гигиенические средства "
@@ -28,6 +34,7 @@ class Command(BaseCommand):
                 "image": "",
                 "category": сategory,
                 "price": 1700,
+                "owner": owner,
             },
             {
                 "name": "Шампунь Farcom",
@@ -35,6 +42,7 @@ class Command(BaseCommand):
                 "image": "",
                 "category": сategory,
                 "price": 269.99,
+                "owner": owner,
             },
             {
                 "name": "Сухой шампунь",
@@ -42,6 +50,7 @@ class Command(BaseCommand):
                 "image": "",
                 "category": сategory,
                 "price": 169.99,
+                "owner": owner,
             },
             {
                 "name": "Кондеционер Tresemme",
@@ -49,6 +58,7 @@ class Command(BaseCommand):
                 "image": "",
                 "category": сategory,
                 "price": 280,
+                "owner": owner,
             },
         ]
 
