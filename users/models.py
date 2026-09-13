@@ -12,7 +12,8 @@ class User(AbstractUser):
         null=True,
         blank=True,
         verbose_name="Аватар",
-        help_text='Загрузите свой аватар'
+        help_text='Загрузите свой аватар',
+
     )
     phone = models.CharField(max_length=35, verbose_name="Телефон", blank=True, null=True, help_text='Введите номер телефона')
     country = models.CharField(max_length=100, verbose_name="Страна",  blank=True, null=True, help_text='Введите страну')
