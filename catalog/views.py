@@ -42,13 +42,13 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     template_name = 'catalog/product_create.html'
     form_class = ProductForm
     success_url = reverse_lazy("catalog:products_list")
 
-    @property
     def get_form_class(self):
         user = self.request.user
         if user == self.object.owner:
@@ -59,7 +59,7 @@ class ProductUpdateView(UpdateView):
 
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'catalog/product_confirm_delete.html'
     success_url = reverse_lazy('catalog:products_list')  # перенаправление на список товаров
@@ -69,6 +69,7 @@ class ProductDeleteView(DeleteView):
         if request.user == product.owner or request.user.has_perm('catalog.delete_product'):
             return super().dispatch(request, *args, **kwargs)
         raise PermissionDenied
+
 
 class ContactView(TemplateView):
     model = Contact
