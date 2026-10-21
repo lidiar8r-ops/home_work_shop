@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from users.models import User
 from .models import Category, Product, Contact
 
 
@@ -30,3 +31,9 @@ class ContactAdmin(admin.ModelAdmin):
     list_display = ('phone', 'email', 'address')
     search_fields = ('phone', 'email', 'address')
     list_filter = ('working_hours',)
+
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("id", 'email')

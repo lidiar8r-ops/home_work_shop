@@ -50,7 +50,7 @@ dict_worlds = ["казино", "криптовалюта", "крипта", "би
 class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
-        fields = "__all__"
+        fields = ('name', 'description', 'image', 'category', 'price')
 
     def clean_name(self):
         name = self.cleaned_data['name']
@@ -113,3 +113,9 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
             )
 
         return image
+
+
+class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('status_publication',)
