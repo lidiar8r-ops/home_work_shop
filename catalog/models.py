@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 from config import settings
 from users.models import User
@@ -8,9 +9,32 @@ from users.models import User
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Наименование")
     description = models.TextField(max_length=1000, verbose_name="Описание")
+    # unique намеренно не задан: Django 6 дублирует pattern-index для unique SlugField.
+    # Уникальность slug обеспечивает save().
+    slug = models.SlugField(
+        max_length=120,
+        blank=True,
+        verbose_name="Слаг",
+        help_text="Используется в URL; заполняется автоматически из названия",
+    )
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._make_unique_slug()
+        super().save(*args, **kwargs)
+
+    def _make_unique_slug(self):
+        base = slugify(self.name, allow_unicode=True) or "category"
+        slug = base
+        suffix = 1
+        queryset = Category.objects.exclude(pk=self.pk)
+        while queryset.filter(slug=slug).exists():
+            suffix += 1
+            slug = f"{base}-{suffix}"
+        return slug
 
     class Meta:
         verbose_name = "категория"

@@ -1,10 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.http import Http404
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView, DeleteView, UpdateView, CreateView
 
 from .forms import ProductForm, ProductModeratorForm
 from .models import Product, Contact
+from .services import get_category_by_key, get_product, get_products_by_category
 
 
 class ProductListView(ListView):
@@ -29,6 +31,29 @@ class ProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
+    template_name = "catalog/product_detail.html"
+
+    def get_object(self, queryset=None):
+        # Низкоуровневое кеширование страницы продукта: product_detail_{id}
+        product = get_product(self.kwargs.get(self.pk_url_kwarg or "pk"))
+        if product is None:
+            raise Http404("Продукт не найден")
+        return product
+
+
+class CategoryProductsView(TemplateView):
+    """Список продуктов категории. Принимает id или slug."""
+
+    template_name = "catalog/category_products.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = get_category_by_key(self.kwargs["category_key"])
+        if category is None:
+            raise Http404("Категория не найдена")
+        context["category"] = category
+        context["products"] = get_products_by_category(category)
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
