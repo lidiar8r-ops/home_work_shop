@@ -2,6 +2,7 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from catalog.models import Category, Product
+from catalog.services import get_default_owner
 from users.models import User
 
 
@@ -17,10 +18,19 @@ class Command(BaseCommand):
         call_command("loaddata", "catalog_fixture.json")
         self.stdout.write(self.style.SUCCESS("Successfully loaded data from fixture"))
 
-        owner, _ = User.objects.get_or_create(
-            email="admin@example.com",
-            defaults={"is_active": True, "is_staff": True},
-        )
+        # Владелец по умолчанию — администратор, если он не был заведён заранее
+        owner = get_default_owner()
+        if owner is None:
+            owner = User.objects.create_user(
+                email="admin@example.com",
+                password=None,
+                is_active=True,
+                is_staff=True,
+                is_superuser=True,
+            )
+            self.stdout.write(
+                self.style.WARNING("Создан администратор admin@example.com — он назначен владельцем продуктов")
+            )
 
         # Вставляем записи
         сategory, _ = Category.objects.get_or_create(
