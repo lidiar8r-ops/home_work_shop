@@ -13,7 +13,7 @@
                          <p class="card-text">Цена за покупку: {{ product.price }}</p>
                          <p class="card-text">Дата создания: {{ product.created_at |date:"d M Y" }}</p>
                          <p class="card-text">Дата последнего изменения: {{ product.updated_at |date:"d M Y" }}</p>
-                         <p class="card-text">Категория: {{ product.category }}</p>
+                         <p class="card-text">Категория: <a href="{% url 'catalog:category_products' product.category.slug %}">{{ product.category }}</a></p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a class="btn btn-primary" role="button"

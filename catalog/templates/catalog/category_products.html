@@ -1,0 +1,39 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <h1 class="mb-2">Категория: {{ category.name }}</h1>
+        <p class="text-body-secondary">{{ category.description }}</p>
+
+        {% if products %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for product in products %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-img-top-wrapper" style="height: 350px;">
+                        <img src="{{ product.image|medis_filter }}"
+                             class="img-fluid"
+                             alt="{{ product.name }}"
+                             style="height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ product.name }}</p>
+                        <p class="card-text">Описание: {{ product.description|truncatechars:100 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a class="btn btn-primary" role="button"
+                               href="{% url 'catalog:products_detail' product.pk %}">Посмотреть</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>В этой категории пока нет продуктов.</p>
+        {% endif %}
+
+        <a class="btn btn-secondary mt-4" href="{% url 'catalog:products_list' %}">Назад к каталогу</a>
+    </div>
+</div>
+{% endblock %}

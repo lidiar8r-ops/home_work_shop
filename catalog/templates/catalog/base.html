@@ -2,18 +2,18 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
 <head>
-    {% include 'catalog\\includes\\inc_header.html' %}
+    {% include 'catalog/includes/inc_header.html' %}
 </head>
 <body>
-    {% include 'catalog\\includes\\inc_themes.html' %}
+    {% include 'catalog/includes/inc_themes.html' %}
 <header data-bs-theme="dark">
 
-    {% include 'catalog\\includes\\inc_menu.html' %}
+    {% include 'catalog/includes/inc_menu.html' %}
 </header>
 <main>
-    {% include 'catalog\\includes\\inc_title.html' %}
+    {% include 'catalog/includes/inc_title.html' %}
     {% if user.is_authenticated %}
-        {% include 'catalog\\includes\\inc_button_create.html' %}
+        {% include 'catalog/includes/inc_button_create.html' %}
     {% endif %}
     {% block content %}
     {% endblock %}
@@ -21,7 +21,7 @@
 
 
 <footer class="text-body-secondary py-5">
-    {% include 'catalog\\includes\\inc_footer.html' %}
+    {% include 'catalog/includes/inc_footer.html' %}
 </footer>
 
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
