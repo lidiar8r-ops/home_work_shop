@@ -79,9 +79,15 @@ catalog/ — приложение для каталога товаров.
 
     templates/ — HTML‑шаблоны.
 
+    templates/catalog/category_products.html — список продуктов категории.
+
     models.py — модели Product, Category, Contact.
 
     views.py — контроллеры страниц.
+
+    services.py — сервисные функции: поиск категории по id/slug, продукты категории с кешем, владелец по умолчанию.
+
+    signals.py — сброс кеша при сохранении и удалении продукта.
 
     admin.py — регистрация моделей в админке, настройка отображения.
 
@@ -424,5 +430,5 @@ python manage.py add_products
 [@lidiar8r-ops](https://github.com/lidiar8r-ops)
 
 
-Версия: 5.0
-Дата: 2026-09-13
+Версия: 6.0
+Дата: 2026-10-24
