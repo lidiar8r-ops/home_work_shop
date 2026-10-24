@@ -105,6 +105,25 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+
+# Кеширование в Redis
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.getenv("REDIS_URL", "redis://127.0.0.1:6379/1"),
+        "KEY_PREFIX": "home_work_shop",
+        "TIMEOUT": int(os.getenv("CACHE_TTL", "300")),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            # Сайт продолжает работать, если Redis недоступен
+            "IGNORE_EXCEPTIONS": True,
+        },
+    }
+}
+
+PRODUCT_DETAIL_CACHE_TTL = int(os.getenv("PRODUCT_DETAIL_CACHE_TTL", "300"))
+CATEGORY_PRODUCTS_CACHE_TTL = int(os.getenv("CATEGORY_PRODUCTS_CACHE_TTL", "300"))
+
 ADMINS = [
     ('Иван Иванов', 'ivan@example.com'),
     ('Мария Петрова', 'maria@example.com'),

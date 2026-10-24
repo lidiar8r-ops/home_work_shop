@@ -1,2 +1,32 @@
-# Created by venv; see https://docs.python.org/3/library/venv.html
-*
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.mypy_cache/
+.pytest_cache/
+
+# Виртуальные окружения
+.venv/
+venv/
+activate/
+Include/
+Lib/
+Scripts/
+pyvenv.cfg
+
+# Django
+*.log
+db.sqlite3
+staticfiles/
+media/
+
+# Переменные окружения
+.env
+
+# IDE
+.idea/
+.vscode/
+
+# ОС
+Thumbs.db
+.DS_Store
